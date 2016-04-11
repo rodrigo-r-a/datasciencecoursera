@@ -1,0 +1,79 @@
+#1. Load the data (i.e. 𝚛𝚎𝚊𝚍.𝚌𝚜
+```{r}
+cpw1 <- read.csv("activity.csv")
+#explore dataset
+names(cpw1)
+head(cpw1)
+dim(cpw1)
+summary(cpw1)
+```
+#2. Calculate the total number of steps taken per day
+```{r}
+cpds <- tapply(cpw1$steps, cpw1$date, sum, na.rm=TRUE)
+```
+#3. Histogram of steps taken by day
+```{r}
+hist(cpds, col="red", main="Steps Taken Each Day", xlab="steps", ylab="day")
+
+```
+#4. Calculate and report the mean and median of the total number of steps taken per day
+```{r}
+mean(cpds)
+#9354.23
+median(cpds)
+#10395
+```
+#5. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+```{r}
+df2 <- tapply(cpw1$steps, cpw1$interval, mean, na.rm=TRUE)
+plot(df2, col="blue", type="l", xlab="interval", ylab="steps", main="Steps done by interval")
+```
+#6. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+```{r}
+which.max(df2)
+#835
+#206.1698
+```
+#7. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
+```{r}
+sum(is.na(cpw1))
+```
+#8. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+#9. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+```{r}
+cpw1_new <- cpw1  # creation of the dataset that will have no more NAs
+for (i in 1:nrow(cpw1)){
+  if(is.na(cpw1$steps[i])){
+    cpw1_new$steps[i]<- df2[[as.character(cpw1[i, "interval"])]]
+  }
+}
+```
+#10. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. 
+```{r}
+cpds_new <- tapply(cpw1_new$steps, cpw1_new$date, sum, na.rm=TRUE)
+head(cpds_new)
+head(cpds)
+dim(cpds_new)
+dim(cpds)
+```
+#11. Do these values differ from the estimates from the first part of the assignment?
+#12. What is the impact of imputing missing data on the estimates of the total daily number of steps?
+```{r}
+equality <- (cpds == cpds_new)
+equality_new <- replace(equality, isTRUE(equality), 1)
+mean(equality_new)
+#0.8688
+1 - 0.8688
+#0.1312; the missing values affect in 13.12% the previous dataset
+```
+#13. Histogram of steps taken by day
+```{r}
+hist(cpds_new, col="red", main="Steps Taken Each Day", xlab="steps", ylab="day")
+```
+#14. Calculate mean and median
+```{r}
+mean(cpds_new)
+#10766.19
+median(cpds_new)
+#10766.19
+```
