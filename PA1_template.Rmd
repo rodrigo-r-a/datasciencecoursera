@@ -79,7 +79,7 @@ mean(cpds_new)
 median(cpds_new)
 #10766.19
 ```
-#12. Are there differences in activity patterns between weekdays and weekends?
+#13. Are there differences in activity patterns between weekdays and weekends?
 ```{r}
 library(ggplot2)
 library(plyr)
