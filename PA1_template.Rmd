@@ -14,6 +14,7 @@ cpds <- tapply(cpw1$steps, cpw1$date, sum, na.rm=TRUE)
 #3. Histogram of steps taken by day
 ```{r}
 hist(cpds, col="blue", main="Steps Taken Each Day", xlab="steps", ylab="day")
+#plot.png in the home page of this repo. Its not printing in the markdown here, but it works in R.
 ```
 #4. Calculate and report the mean and median of the total number of steps taken per day
 ```{r}
@@ -26,6 +27,7 @@ median(cpds)
 ```{r}
 df2 <- tapply(cpw1$steps, cpw1$interval, mean, na.rm=TRUE)
 plot(df2, col="blue", type="l", xlab="interval", ylab="steps", main="Steps done by interval")
+#plot1.png in the home page of this repo. Its not printing in the markdown here, but it works in R.
 ```
 #6. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 ```{r}
@@ -66,6 +68,7 @@ mean(equality_new)
 #11. Histogram of steps taken by day
 ```{r}
 hist(cpds_new, col="red", main="Steps Taken Each Day with NAs replaced", xlab="steps", ylab="day")
+#plot2.png in the home page of this repo. Its not printing in the markdown here, but it works in R.
 ```
 ```{r}
 ```
