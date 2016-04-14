@@ -55,8 +55,7 @@ head(cpds)
 dim(cpds_new)
 dim(cpds)
 ```
-#11. Do these values differ from the estimates from the first part of the assignment?
-#12. What is the impact of imputing missing data on the estimates of the total daily number of steps?
+#12. What is the impact of imputing missing data on the estimates of the total daily number of steps? Do these values differ from the estimates from the first part of the assignment?
 ```{r}
 equality <- (cpds == cpds_new)
 equality_new <- replace(equality, isTRUE(equality), 1)
@@ -67,7 +66,9 @@ mean(equality_new)
 ```
 #13. Histogram of steps taken by day
 ```{r}
-hist(cpds_new, col="red", main="Steps Taken Each Day", xlab="steps", ylab="day")
+hist(cpds_new, col="red", main="Steps Taken Each Day with NAs replaced", xlab="steps", ylab="day")
+```
+```{r}
 ```
 #14. Calculate mean and median
 ```{r}
@@ -75,4 +76,25 @@ mean(cpds_new)
 #10766.19
 median(cpds_new)
 #10766.19
+```
+#15. Are there differences in activity patterns between weekdays and weekends?
+```{r}
+library(ggplot2)
+library(plyr)
+paindays= c("Monday","Tuesday","Wednesday","Thursday","Friday")
+
+cpds$weekday<-as.factor(ifelse(weekdays(cpds$date)%in%paindays,"weekday","weekend"))
+
+stepsperinterval.weekdaysplit<-ddply(cpds_new, c("interval","weekday"),summarise,
+                    meansteps = mean(steps,na.rm=TRUE)
+)
+
+weekday_plot<-ggplot(stepsperinterval.weekdaysplit,aes(x=interval,y=meansteps))+
+  facet_wrap(~weekday,nrow=2,ncol=1)+
+  geom_line()+
+  theme_bw()+
+  ggtitle("Mean steps over each 5min interval split by weekday/weekend")+
+  ylab("Mean steps")+
+  xlab("Interval number")
+print(weekday_plot)
 ```
