@@ -13,7 +13,7 @@ cpds <- tapply(cpw1$steps, cpw1$date, sum, na.rm=TRUE)
 ```
 #3. Histogram of steps taken by day
 ```{r}
-hist(cpds, col="red", main="Steps Taken Each Day", xlab="steps", ylab="day")
+hist(cpds, col="blue", main="Steps Taken Each Day", xlab="steps", ylab="day")
 ```
 #4. Calculate and report the mean and median of the total number of steps taken per day
 ```{r}
