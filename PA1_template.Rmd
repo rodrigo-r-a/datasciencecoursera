@@ -37,8 +37,7 @@ which.max(df2)
 ```{r}
 sum(is.na(cpw1))
 ```
-#8. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
-#9. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+#8. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 ```{r}
 cpw1_new <- cpw1  # creation of the dataset that will have no more NAs
 for (i in 1:nrow(cpw1)){
@@ -47,7 +46,7 @@ for (i in 1:nrow(cpw1)){
   }
 }
 ```
-#10. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. 
+#9. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. 
 ```{r}
 cpds_new <- tapply(cpw1_new$steps, cpw1_new$date, sum, na.rm=TRUE)
 head(cpds_new)
@@ -55,7 +54,7 @@ head(cpds)
 dim(cpds_new)
 dim(cpds)
 ```
-#12. What is the impact of imputing missing data on the estimates of the total daily number of steps? Do these values differ from the estimates from the first part of the assignment?
+#10. What is the impact of imputing missing data on the estimates of the total daily number of steps? Do these values differ from the estimates from the first part of the assignment?
 ```{r}
 equality <- (cpds == cpds_new)
 equality_new <- replace(equality, isTRUE(equality), 1)
@@ -64,13 +63,13 @@ mean(equality_new)
 1 - 0.8688
 #0.1312; the missing values affect in 13.12% the previous dataset
 ```
-#13. Histogram of steps taken by day
+#11. Histogram of steps taken by day
 ```{r}
 hist(cpds_new, col="red", main="Steps Taken Each Day with NAs replaced", xlab="steps", ylab="day")
 ```
 ```{r}
 ```
-#14. Calculate mean and median
+#12. Calculate mean and median
 ```{r}
 mean(cpds_new)
 #10766.19
